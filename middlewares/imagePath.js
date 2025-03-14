@@ -1,5 +1,5 @@
-function setImagePath (rec, res, next){
-   req.ImagePath = `${rec.protocol}://${req.get("host")}/movie_cover`
+function setImagePath (req, res, next){
+   req.ImagePath = `${req.protocol}://${req.get("host")}/movie_cover`
    next()
 }
 
