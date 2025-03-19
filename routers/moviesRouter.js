@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const {index, show, update, destroy, storeReview} = require("../controllers/movieController")
+const {index, show, update, destroy, storeReview, store} = require("../controllers/movieController")
+const upload = require("../middlewares/multer")
 
 
 router.get("/", index)
@@ -13,4 +14,6 @@ router.delete("/:id", destroy)
 
 router.post("/:id/reviews", storeReview)
 
-module.exports = router 
+router.post("/", upload.single("image"), store)
+
+module.exports = router

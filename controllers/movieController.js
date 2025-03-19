@@ -93,7 +93,7 @@ function storeReview(req, res) {
     connection.query(sql, [text, name, vote, id], (err, results) => {
         if (err)
             return res.status(500).json({
-              error: 'Database Errore StoreReview',
+                error: 'Database Errore StoreReview',
             })
 
         res.status(201);
@@ -104,4 +104,30 @@ function storeReview(req, res) {
     })
 }
 
-module.exports = { index, show, update, destroy, storeReview }
+function store(req, res) {
+    
+    const { title, director, genre, release_year, abstract } = req.body
+
+    const imageName = `${req.file.filename}`
+
+    console.log(imageName)
+
+    const sql = "INSERT INTO movies (title, director, genre, image, release_year, abstract) VALUES (?,?,?,?,?,?)"
+
+    connection.query(sql, [title, director, genre, imageName, release_year,  abstract], (err, results) => {
+        if (err) {
+            return res.sendStatus(500).json({
+                error: 'Database Errore Store'
+            })
+        }
+
+        res.status(201).json({
+            status: "success",
+            message: "Movie create with success",
+            id: results.insertId
+        })
+    })
+
+}
+
+module.exports = { index, show, update, destroy, storeReview, store }
